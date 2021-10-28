@@ -1,14 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User
+from .models import User, Product
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    products = Product.objects.all()
+    return render(request, "auctions/index.html",{
+        'products': products
+    })
 
 
 def login_view(request):
@@ -64,5 +67,15 @@ def register(request):
 
 
 def add_product(request):
-    print("  --->")
-    return HttpResponse("Product Added")
+    if request.method == 'GET':
+        return render(request, 'auctions/add_product.html')
+
+    if request.method == 'POST':
+        name = request.POST['product_name']
+        description = request.POST['description']
+        year = request.POST['year']
+
+        product = Product(name=name, description=description, year=year)
+        product.save()
+
+        return redirect('index')
