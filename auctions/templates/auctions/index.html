@@ -3,9 +3,22 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    <ul>
-        {% for product in products %}
-            <li>{{ product }}</li>
-        {% endfor%}
-    </ul>
+    <div class="container">
+    <div class="row">
+    {% for product in products %}
+            <div class="col-lg-4 col-sm-6 ">
+
+                <div class="card mb-3">
+                    <ul>
+                        <li>{{ product.name }}</li>
+                        <li>{{ product.description }}</li>
+                        <li>{{ product.year }}</li>
+                    </ul>
+                    <a  href="{% url 'delete_product' product.id %}" 
+                        class="btn btn-danger col-lg-3 col-sm-6" >Delete</a>
+                </div>
+            </div>
+            {% endfor%}
+    </div>
+    </div>
 {% endblock %}

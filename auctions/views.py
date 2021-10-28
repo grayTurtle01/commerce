@@ -79,3 +79,9 @@ def add_product(request):
         product.save()
 
         return redirect('index')
+
+def delete_product(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    product.delete()
+
+    return redirect('index')
