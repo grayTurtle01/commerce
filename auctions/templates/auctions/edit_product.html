@@ -9,22 +9,32 @@
 
     <div class="form-group">
       <input name="product_name" type="text" placeholder="Product Name" 
-             class="form-control" value={{ product.name }} >
+             class="form-control" value="{{ product.name }}" >
     </div>
   
     <div class="form-group">
       <input name="description" type="text" placeholder="Description" 
-             class="form-control" value={{ product.description}} >
+             class="form-control" value="{{ product.description}}" >
     </div>
 
     <div class="form-group">
-      <input name="year" placeholder="Year" type="number" 
-             class="form-control" value={{ product.year}}>
+      <input name="price" placeholder="Price" type="number" 
+             class="form-control" value="{{ product.price }}">
     </div>
 
     <div class="form-group">
       <input name="image" type="text" placeholder="Image"  
-             class="form-control" value={{ product.image}}>
+             class="form-control" value="{{ product.image }}">
+    </div>
+
+    <div class="form-group">
+      <select name="category" >
+        <option value="" disabled selected>Category</option>
+        <option value="Books">Books</option>
+        <option value="Toys">Toys</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Electronics">Electronis</option>
+      </select>
     </div>
 
 

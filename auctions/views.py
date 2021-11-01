@@ -73,11 +73,15 @@ def add_product(request):
     if request.method == 'POST':
         name = request.POST['product_name']
         description = request.POST['description']
-        year = request.POST['year']
+        price = request.POST['price']
         image = request.POST['image']
-        image = f"auctions/images/{image}"
+        image_url = f"auctions/images/{image}"
+        category = request.POST['category']
 
-        product = Product(name=name, description=description, year=year, image=image)
+        file_test = reques.POST['file']
+        
+
+        product = Product(name=name, description=description, price=price, image=image, image_url=image_url)
         product.save()
 
         return redirect('index')
@@ -98,15 +102,18 @@ def edit_product(request, product_id):
     if request.method == 'POST':
         name = request.POST['product_name']
         description = request.POST['description']
-        year = request.POST['year']
+        price = request.POST['price']
         image = request.POST['image']
-        image = f"auctions/images/{image}"
+        image_url = f"auctions/images/{image}"
+        category = request.POST['category']
 
         product = Product.objects.get(pk=product_id)
         product.name = name
         product.description = description
-        product.year = year
+        product.price = price
         product.image = image
+        product.image_url = image_url
+        product.category = category
 
         product.save()
         
