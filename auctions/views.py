@@ -74,8 +74,10 @@ def add_product(request):
         name = request.POST['product_name']
         description = request.POST['description']
         year = request.POST['year']
+        image = request.POST['image']
+        image = f"auctions/images/{image}"
 
-        product = Product(name=name, description=description, year=year)
+        product = Product(name=name, description=description, year=year, image=image)
         product.save()
 
         return redirect('index')

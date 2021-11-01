@@ -1,24 +1,30 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
+
 {% block body %}
     <h2>Active Listings</h2>
 
     <div class="container">
     <div class="row">
     {% for product in products %}
-            <div class="col-lg-4 col-sm-6 ">
+            <div class="col-lg-3 col-sm-6 ">
 
                 <div class="card mb-3">
+                    <img class="card-img-top"  
+                         src="{% static product.image %}" >
+                  
                     <ul>
                         <li>{{ product.name }}</li>
                         <li>{{ product.description }}</li>
                         <li>{{ product.year }}</li>
                     </ul>
                     <a  href="{% url 'delete_product' product.id %}" 
-                        class="btn btn-danger col-lg-3 col-sm-6" >Delete</a>
+                        class="btn btn-danger col-lg-3 col-sm-6" >Del</a>
                 </div>
             </div>
             {% endfor%}
     </div>
     </div>
+
 {% endblock %}
