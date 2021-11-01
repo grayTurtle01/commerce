@@ -14,13 +14,22 @@
                     <img class="card-img-top"  
                          src="{% static product.image %}" >
                   
-                    <ul>
-                        <li>{{ product.name }}</li>
-                        <li>{{ product.description }}</li>
-                        <li>{{ product.year }}</li>
-                    </ul>
-                    <a  href="{% url 'delete_product' product.id %}" 
-                        class="btn btn-danger col-lg-3 col-sm-6" >Del</a>
+
+                    <div>
+
+                        <ul>
+                            <li>{{ product.name }}</li>
+                            <li>{{ product.description }}</li>
+                            <li>{{ product.year }}</li>
+                        </ul>
+                        
+                        <a  href="{% url 'delete_product' product.id %}" 
+                        class="btn btn-danger col-lg-3 col-sm-5" >Del</a>
+                        
+                        <a  href="{% url 'edit_product' product.id %}" 
+                        class="btn btn-primary col-lg-3 col-sm-5" >Edit</a>
+                        
+                    </div>     
                 </div>
             </div>
             {% endfor%}

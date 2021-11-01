@@ -87,3 +87,28 @@ def delete_product(request, product_id):
     product.delete()
 
     return redirect('index')
+
+def edit_product(request, product_id):
+    if request.method == 'GET':
+        product = Product.objects.get(pk=product_id)
+        return render(request, 'auctions/edit_product.html', {
+            'product' : product
+        })
+
+    if request.method == 'POST':
+        name = request.POST['product_name']
+        description = request.POST['description']
+        year = request.POST['year']
+        image = request.POST['image']
+        image = f"auctions/images/{image}"
+
+        product = Product.objects.get(pk=product_id)
+        product.name = name
+        product.description = description
+        product.year = year
+        product.image = image
+
+        product.save()
+        
+
+        return redirect('index')
