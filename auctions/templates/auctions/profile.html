@@ -24,11 +24,13 @@
                             <li>Price: ${{ product.price }}</li>
                         </ul>
                         
-                        <a  href="{% url 'delete_product' product.id %}" 
-                        class="btn btn-danger col-lg-4 col-sm-3" >Del</a>
-                        
-                        <a  href="{% url 'edit_product' product.id %}" 
-                        class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
+                        {% if product.creator == user.username %}  
+                            <a  href="{% url 'delete_product' product.id %}" 
+                            class="btn btn-danger col-lg-4 col-sm-3" >Del</a>
+                            
+                            <a  href="{% url 'edit_product' product.id %}" 
+                            class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
+                        {% endif %} 
                         
                     </div>     
                 </div>

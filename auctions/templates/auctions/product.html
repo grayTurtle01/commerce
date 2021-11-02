@@ -19,6 +19,10 @@
   </form>
 </div>
 
+{% if product.creator == user.username %}
+  <a href="" class="btn btn-dark m-3">Close Bid</a>  
+ {% endif %} 
+
 {% if messageFail %}
   <div class="alert alert-danger col-lg-4 mt-3">{{messageFail}}</div>
 {% endif %}
