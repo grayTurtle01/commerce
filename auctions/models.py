@@ -15,6 +15,7 @@ class Product(models.Model):
     category = models.CharField(max_length=64)
     #date = models.DateTimeField()
     creator = models.CharField(max_length=64)
+    is_active = models.BooleanField(default=True)
 
 
     def __str__(self):

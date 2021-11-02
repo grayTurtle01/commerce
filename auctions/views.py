@@ -8,7 +8,7 @@ from .models import User, Product, Foo
 
 
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_active=True)
     return render(request, "auctions/index.html",{
         'products': products,
         'counter': 0
@@ -77,7 +77,7 @@ def add_product(request):
         price = request.POST['price']
         image_url = request.POST['image_url']
         category = request.POST['category']
-        creator = request.user
+        creator = request.user.username
 
         product = Product(name=name, description=description, price=price, 
                           image_url=image_url, category=category, creator=creator)
@@ -154,6 +154,14 @@ def show_profile(request, creator):
         'creator': creator,
         'products': products
     })
+
+def close_bid(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    if product.is_active :
+        product.is_active = False
+        product.save()
+
+    return redirect('index')
 
 
 def add_book_watchlist(request):
