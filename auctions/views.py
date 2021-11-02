@@ -78,7 +78,7 @@ def add_product(request):
         image_url = f"auctions/images/{image}"
         category = request.POST['category']
 
-        file_test = reques.POST['file']
+        #file_test = request.POST['file']
         
 
         product = Product(name=name, description=description, price=price, image=image, image_url=image_url)
@@ -119,3 +119,32 @@ def edit_product(request, product_id):
         
 
         return redirect('index')
+
+from .models import UploadFileForm
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_upload_file(request.FILES['file'], request.POST['title'])
+            return redirect('index')
+        else:
+            return render(request, 'auctions/upload.html', {
+                'form': form
+            })
+
+    if request.method == 'GET':
+        form = UploadFileForm()
+        return render(request, 'auctions/upload.html',{
+            'form': form
+        })
+
+import os
+def handle_upload_file(f, title):
+    
+    directory = os.getcwd()
+    full_path = directory + f"/auctions/static/auctions/images/{title}.jpg"
+
+    with open(full_path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
