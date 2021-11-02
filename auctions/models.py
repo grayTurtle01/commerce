@@ -16,6 +16,7 @@ class Product(models.Model):
     #date = models.DateTimeField()
     creator = models.CharField(max_length=64)
     is_active = models.BooleanField(default=True)
+    winner = models.CharField(max_length=64, default="admin")
 
 
     def __str__(self):

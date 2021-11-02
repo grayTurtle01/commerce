@@ -36,6 +36,11 @@
                             
                             <a  href="{% url 'edit_product' product.id %}" 
                             class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
+
+                            <a href="{% url 'close_bid' product.id %}"
+                               class="btn btn-warning" 
+                            >Toggle</a>
+
                         {% endif %} 
                         
                     </div>     

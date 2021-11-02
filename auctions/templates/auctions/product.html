@@ -13,29 +13,46 @@
   <p>{{ product.description  }}</p>
   <h2>Price: ${{ product.price }}</h2>
 
-  <form action="{% url 'change_price' product.id %}">
-    <input type="text" name="new_price" placeholder="Bid" autofocus>
-    <input type="submit" value="Place Bid" class="btn btn-primary">
-  </form>
-</div>
 
-{% if product.creator == user.username %}
-  <a href="{% url 'close_bid' product.id %}" class="btn btn-dark m-3">Close Bid</a>  
- {% endif %} 
+  {% if product.is_active %}  
+    <form action="{% url 'change_price' product.id %}">
+      <input type="text" name="new_price" placeholder="Bid" autofocus>
+      <input type="submit" value="Place Bid" class="btn btn-primary">
+    </form>
 
-{% if messageFail %}
+   </div>
+
+    {% if product.creator == user.username %}
+    <a href="{% url 'close_bid' product.id %}" class="btn btn-dark m-3">Close Bid</a>  
+    {% endif %} 
+
+ {% else %}
+   <div class="alert alert-secondary ">Closed Bid.  Winner: {{product.winner}}</div>
+
+
+{% endif %}
+
+
+  {% if messageFail %}
   <div class="alert alert-danger col-lg-4 mt-3">{{messageFail}}</div>
-{% endif %}
+  {% endif %}
 
-{% if messageSuccess %}
+  {% if messageSuccess %}
   <div class="alert alert-success col-lg-4 mt-3">{{messageSuccess}}</div>
-{% endif %}
+  {% endif %}
+
 
 
 <h2>Details</h2>
 <ul>
   <li>Listed by: <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
   <li>Category: {{product.category}}</li>
+  <li>Status: {% if product.is_active %}
+    Active
+    {% else %}
+    Closed
+    {% endif %}
+  </li>
 </ul>
 
 {% endblock%}

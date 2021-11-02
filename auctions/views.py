@@ -8,7 +8,7 @@ from .models import User, Product, Foo
 
 
 def index(request):
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.all()
     return render(request, "auctions/index.html",{
         'products': products,
         'counter': 0
@@ -132,6 +132,7 @@ def change_price(request, product_id):
 
     if( new_price > product.price ):
         product.price = new_price
+        product.winner = request.user.username
         product.save()
 
         return render(request, 'auctions/product.html',{
@@ -159,9 +160,16 @@ def close_bid(request, product_id):
     product = Product.objects.get(pk=product_id)
     if product.is_active :
         product.is_active = False
-        product.save()
+    else: 
+        product.is_active = True
 
-    return redirect('index')
+    product.save()
+
+    #return redirect('index')
+    return render(request, 'auctions/product.html',{
+        'product': product,
+
+    })
 
 
 def add_book_watchlist(request):
