@@ -4,13 +4,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Product
+from .models import User, Product, Foo
 
 
 def index(request):
     products = Product.objects.all()
     return render(request, "auctions/index.html",{
-        'products': products
+        'products': products,
+        'counter': 0
     })
 
 
@@ -75,13 +76,11 @@ def add_product(request):
         description = request.POST['description']
         price = request.POST['price']
         image_url = request.POST['image_url']
-        #image_url = f"auctions/images/{image}"
         category = request.POST['category']
+        creator = request.user
 
-        #file_test = request.POST['file']
-        
-
-        product = Product(name=name, description=description, price=price, image_url=image_url, category=category)
+        product = Product(name=name, description=description, price=price, 
+                          image_url=image_url, category=category, creator=creator)
         product.save()
 
         return redirect('index')
@@ -123,9 +122,14 @@ def edit_product(request, product_id):
 def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     return render(request, 'auctions/product.html', {
-        'product' : product
+        'product' : product,
+        'counter': 0
     })
 
+
+def add_book_watchlist(request):
+
+    return redirect('index')
 
 
 from .models import UploadFileForm

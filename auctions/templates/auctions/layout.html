@@ -22,20 +22,38 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="">Categories</a>
+            </li>
+
             {% if user.is_authenticated %}
+               
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link" href="">WatchList
+                        <span class="badge bg-secondary text-white" >{{counter}}</span>
+                    </a>
+                    
                 </li>
 
                 <li class="nav-item" >
                    <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>     
                 </li>
-                
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+
+
                 {% comment %}
                 <li class="nav-item" >
                     <a class="nav-link" href="{% url 'upload_file' %}">Upload File</a>     
                  </li>
                 {% endcomment %}
+
+               
+                    
+
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>

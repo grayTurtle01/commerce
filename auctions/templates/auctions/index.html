@@ -19,11 +19,9 @@
 
                     <div>
 
-                        <ul>
+                        <ul class="mt-3">
                             <li>{{ product.name }}</li>
-                            <li>{{ product.description }}</li>
                             <li>Price: ${{ product.price }}</li>
-                            <li>{{ product.category }}</li>
                         </ul>
                         
                         <a  href="{% url 'delete_product' product.id %}" 

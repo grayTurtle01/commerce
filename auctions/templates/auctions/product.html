@@ -3,7 +3,12 @@
 {% block body %}
 
 <div class="col-lg-4">
-  <h1> {{ product.name }}</h1>
+  <div>
+    <h1> {{ product.name }}</h1>
+    <a href="{% url 'add_book_watchlist' %}">
+      <span class="badge bg-secondary text-white mb-3">WatchList</span>
+    </a>
+  </div>
   <img src="{{ product.image_url }}" >
   <p>{{ product.description  }}</p>
   <h2>Price: ${{ product.price }}</h2>
@@ -12,8 +17,12 @@
     <input type="text" name="bid" placeholder="Bid" autofocus>
     <input type="submit" value="Place Bid" class="btn btn-primary">
   </form>
-
 </div>
 
+<h2>Details</h2>
+<ul>
+  <li>Listed by: <a href="">{{product.creator}}</a></li>
+  <li>Category: {{product.category}}</li>
+</ul>
 
 {% endblock%}

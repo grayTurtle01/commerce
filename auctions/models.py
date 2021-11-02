@@ -13,10 +13,15 @@ class Product(models.Model):
     image = models.CharField(max_length=64)
     image_url = models.CharField(max_length=300)
     category = models.CharField(max_length=64)
+    #date = models.DateTimeField()
+    creator = models.CharField(max_length=64)
 
 
     def __str__(self):
         return f"{self.name}"
+
+class Foo(models.Model):
+    counter = models.IntegerField()
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
