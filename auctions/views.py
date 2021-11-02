@@ -120,8 +120,15 @@ def edit_product(request, product_id):
 
         return redirect('index')
 
-from .models import UploadFileForm
+def show_product(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    return render(request, 'auctions/product.html', {
+        'product' : product
+    })
 
+
+
+from .models import UploadFileForm
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)

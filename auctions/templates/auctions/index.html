@@ -11,9 +11,11 @@
             <div class="col-lg-3 col-sm-6 ">
 
                 <div class="card mb-3">
-                    <img class="card-img-top"  
-                         src="{{ product.image_url }}" >
-                  
+                    <a href="{% url 'show_product' product.id %}">
+                        <img class="card-img-top"  
+                        src="{{ product.image_url }}" >
+                        
+                    </a>
 
                     <div>
 
