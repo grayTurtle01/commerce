@@ -12,7 +12,7 @@
 
                 <div class="card mb-3">
                     <img class="card-img-top"  
-                         src="{% static product.image_url %}" >
+                         src="{{ product.image_url }}" >
                   
 
                     <div>
@@ -25,10 +25,10 @@
                         </ul>
                         
                         <a  href="{% url 'delete_product' product.id %}" 
-                        class="btn btn-danger col-lg-4 col-sm-5" >Del</a>
+                        class="btn btn-danger col-lg-4 col-sm-3" >Del</a>
                         
                         <a  href="{% url 'edit_product' product.id %}" 
-                        class="btn btn-primary col-lg-4 col-sm-5" >Edit</a>
+                        class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
                         
                     </div>     
                 </div>

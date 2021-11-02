@@ -30,10 +30,12 @@
                 <li class="nav-item" >
                    <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>     
                 </li>
-
+                
+                {% comment %}
                 <li class="nav-item" >
                     <a class="nav-link" href="{% url 'upload_file' %}">Upload File</a>     
                  </li>
+                {% endcomment %}
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Log In</a>

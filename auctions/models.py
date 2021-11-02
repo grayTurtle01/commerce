@@ -11,7 +11,7 @@ class Product(models.Model):
     description = models.CharField(max_length=64)
     price = models.IntegerField()
     image = models.CharField(max_length=64)
-    image_url = models.CharField(max_length=64)
+    image_url = models.CharField(max_length=300)
     category = models.CharField(max_length=64)
 
 

@@ -74,14 +74,14 @@ def add_product(request):
         name = request.POST['product_name']
         description = request.POST['description']
         price = request.POST['price']
-        image = request.POST['image']
-        image_url = f"auctions/images/{image}"
+        image_url = request.POST['image_url']
+        #image_url = f"auctions/images/{image}"
         category = request.POST['category']
 
         #file_test = request.POST['file']
         
 
-        product = Product(name=name, description=description, price=price, image=image, image_url=image_url)
+        product = Product(name=name, description=description, price=price, image_url=image_url, category=category)
         product.save()
 
         return redirect('index')
@@ -103,15 +103,15 @@ def edit_product(request, product_id):
         name = request.POST['product_name']
         description = request.POST['description']
         price = request.POST['price']
-        image = request.POST['image']
-        image_url = f"auctions/images/{image}"
+        image_url = request.POST['image_url']
+        #image_url = f"auctions/images/{image}"
         category = request.POST['category']
 
         product = Product.objects.get(pk=product_id)
         product.name = name
         product.description = description
         product.price = price
-        product.image = image
+        #product.image = image
         product.image_url = image_url
         product.category = category
 
@@ -132,6 +132,8 @@ def upload_file(request):
             return render(request, 'auctions/upload.html', {
                 'form': form
             })
+        
+    
 
     if request.method == 'GET':
         form = UploadFileForm()
