@@ -30,7 +30,7 @@
 
 <h2>Details</h2>
 <ul>
-  <li>Listed by: <a href="">{{product.creator}}</a></li>
+  <li>Listed by: <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
   <li>Category: {{product.category}}</li>
 </ul>
 

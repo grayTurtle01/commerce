@@ -147,10 +147,18 @@ def change_price(request, product_id):
         )
 
 
+def show_profile(request, creator):
+    products = Product.objects.filter(creator=creator)
+
+    return render(request, 'auctions/profile.html',{
+        'creator': creator,
+        'products': products
+    })
+
+
 def add_book_watchlist(request):
 
     return redirect('index')
-
 
 
 from .models import UploadFileForm

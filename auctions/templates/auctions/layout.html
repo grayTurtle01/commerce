@@ -8,7 +8,9 @@
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Auctions</h1>
+        <a href="/" style="text-decoration: none; color: black;">
+            <h1>Auctions</h1>
+        </a>
 
         <div>
             {% if user.is_authenticated %}

@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <h1 style="text-align: center;">{{ creator }}</h1>
+
+    <div class="container">
+    <div class="row">
+    {% for product in products %}
+            <div class="col-lg-3 col-sm-6 ">
+
+                <div class="card mb-3">
+                    <a href="{% url 'show_product' product.id %}">
+                        <img class="card-img-top"  
+                        src="{{ product.image_url }}" >
+                        
+                    </a>
+
+                    <div>
+
+                        <ul class="mt-3">
+                            <li>{{ product.name }}</li>
+                            <li>Price: ${{ product.price }}</li>
+                        </ul>
+                        
+                        <a  href="{% url 'delete_product' product.id %}" 
+                        class="btn btn-danger col-lg-4 col-sm-3" >Del</a>
+                        
+                        <a  href="{% url 'edit_product' product.id %}" 
+                        class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
+                        
+                    </div>     
+                </div>
+            </div>
+            {% endfor%}
+    </div>
+    </div>
+
+{% endblock %}
