@@ -13,11 +13,20 @@
   <p>{{ product.description  }}</p>
   <h2>Price: ${{ product.price }}</h2>
 
-  <form action="">
-    <input type="text" name="bid" placeholder="Bid" autofocus>
+  <form action="{% url 'change_price' product.id %}">
+    <input type="text" name="new_price" placeholder="Bid" autofocus>
     <input type="submit" value="Place Bid" class="btn btn-primary">
   </form>
 </div>
+
+{% if messageFail %}
+  <div class="alert alert-danger col-lg-4 mt-3">{{messageFail}}</div>
+{% endif %}
+
+{% if messageSuccess %}
+  <div class="alert alert-success col-lg-4 mt-3">{{messageSuccess}}</div>
+{% endif %}
+
 
 <h2>Details</h2>
 <ul>

@@ -103,14 +103,12 @@ def edit_product(request, product_id):
         description = request.POST['description']
         price = request.POST['price']
         image_url = request.POST['image_url']
-        #image_url = f"auctions/images/{image}"
         category = request.POST['category']
 
         product = Product.objects.get(pk=product_id)
         product.name = name
         product.description = description
         product.price = price
-        #product.image = image
         product.image_url = image_url
         product.category = category
 
@@ -123,13 +121,36 @@ def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     return render(request, 'auctions/product.html', {
         'product' : product,
-        'counter': 0
+        'counter': 0,
+        'message': ''
     })
+
+
+def change_price(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    new_price = int(request.GET['new_price'])
+
+    if( new_price > product.price ):
+        product.price = new_price
+        product.save()
+
+        return render(request, 'auctions/product.html',{
+            'product': product,
+            'messageSuccess': "The Bid was accepted !!"
+        })
+
+    else:
+        return render(request, 'auctions/product.html',{
+            'product': product,
+            'messageFail': f"The amount must be greater than ${product.price}"
+        }
+        )
 
 
 def add_book_watchlist(request):
 
     return redirect('index')
+
 
 
 from .models import UploadFileForm
