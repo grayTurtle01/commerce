@@ -75,7 +75,9 @@ def register(request):
 
 def add_product(request):
     if request.method == 'GET':
-        return render(request, 'auctions/add_product.html')
+        return render(request, 'auctions/add_product.html',{
+            'counter': len(request.user.products.all())
+        })
 
     if request.method == 'POST':
         name = request.POST['product_name']
@@ -200,6 +202,13 @@ def add_book_watchlist(request, product_id):
     
     return redirect('index')
 
+
+def show_watchlist(request):
+    products = request.user.products.all()
+    return render(request, 'auctions/watchlist.html',{
+        'products': products,
+        'counter': len(request.user.products.all())
+    })
 
 from .models import UploadFileForm
 def upload_file(request):

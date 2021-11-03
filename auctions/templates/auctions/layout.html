@@ -32,7 +32,7 @@
             {% if user.is_authenticated %}
                
                 <li class="nav-item">
-                    <a class="nav-link" href="">WatchList
+                    <a class="nav-link" href="{% url 'show_watchlist' %}">WatchList
                         <span class="badge bg-secondary text-white" >{{ counter }}</span>
                     </a>
                     

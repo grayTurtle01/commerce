@@ -15,6 +15,7 @@ urlpatterns = [
     path('change_price/<int:product_id>', views.change_price, name="change_price"),
     path('show_profile/<str:creator>', views.show_profile, name="show_profile"),
     path('close_bid/<int:product_id>', views.close_bid, name="close_bid"),
+    path('show_watchlist/', views.show_watchlist, name="show_watchlist"),
 
     path("upload_file", views.upload_file, name="upload_file"),
 
