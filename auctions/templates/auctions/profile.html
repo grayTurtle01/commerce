@@ -30,21 +30,24 @@
                             </li>
                         </ul>
                         
-                        {% if product.creator == user.username %}  
-                            <a  href="{% url 'delete_product' product.id %}" 
-                            class="btn btn-danger col-lg-4 col-sm-3" >Del</a>
-                            
-                            <a  href="{% url 'edit_product' product.id %}" 
-                            class="btn btn-primary col-lg-4 col-sm-3" >Edit</a>
-                            
-                            {% if product.is_active %}
-                                <a href="{% url 'close_bid' product.id %}"
-                                class="btn btn-secondary" >Close</a>
-                            {% else %}
-                                <a href="{% url 'close_bid' product.id %}"
-                                class="btn btn-success" >Open</a>
+                        {% if product.creator == user.username %}
+                          
+
+                                <a  href="{% url 'delete_product' product.id %}" 
+                                class="btn btn-danger col-lg-3 col-sm-3" >Del</a>
                                 
-                            {% endif %}
+                                <a  href="{% url 'edit_product' product.id %}" 
+                                class="btn btn-primary col-lg-3 col-sm-3" >Edit</a>
+                                
+                                {% if product.is_active %}
+                                    <a href="{% url 'close_bid' product.id %}"
+                                    class="btn btn-secondary " >Close</a>
+                                {% else %}
+                                    <a href="{% url 'close_bid' product.id %}"
+                                    class="btn btn-success " >Open</a>
+                                
+                                {% endif %}
+                          
 
                         {% endif %} 
                         

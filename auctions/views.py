@@ -123,11 +123,20 @@ def edit_product(request, product_id):
         product.save()
         
 
-        return redirect('index')
+        return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
 def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
 
+    ### Is the product in favorites
+    try:
+        request.user.products.get(pk=product_id)
+        is_selected = True
+    except:
+        is_selected = False
+     
+
+    ### Count favorites   
     try:
         counter = len(request.user.products.all())
     except:
@@ -137,7 +146,8 @@ def show_product(request, product_id):
         'product' : product,
         'counter' : counter,
         'message': '',
-        'comments': Comment.objects.filter(product_id=product_id)
+        'comments': Comment.objects.filter(product_id=product_id),
+        'is_selected': is_selected
     })
 
 
@@ -182,10 +192,7 @@ def close_bid(request, product_id):
     product.save()
 
     #return redirect('index')
-    return render(request, 'auctions/product.html',{
-        'product': product,
-
-    })
+    return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
 
 def add_book_watchlist(request, product_id):
@@ -224,6 +231,14 @@ def add_comment(request, product_id):
 
     else:
         return redirect('index')
+
+def products_filtered(request, category):
+    products = Product.objects.filter(category=category)
+
+    return render(request, 'auctions/products_filtered.html',{
+        'products': products,
+        'category': category
+    })
 
 from .models import UploadFileForm
 def upload_file(request):
