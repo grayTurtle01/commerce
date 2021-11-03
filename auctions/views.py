@@ -4,14 +4,20 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Product, Foo
+from .models import User, Product
 
 
 def index(request):
     products = Product.objects.all()
+
+    try:
+        counter = len(request.user.products.all())
+    except:
+        counter = 0
+    
     return render(request, "auctions/index.html",{
         'products': products,
-        'counter': 0
+        'counter' : counter
     })
 
 
@@ -119,9 +125,15 @@ def edit_product(request, product_id):
 
 def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
+
+    try:
+        counter = len(request.user.products.all())
+    except:
+        counter = 0
+
     return render(request, 'auctions/product.html', {
         'product' : product,
-        'counter': 0,
+        'counter' : counter,
         'message': ''
     })
 
@@ -153,7 +165,8 @@ def show_profile(request, creator):
 
     return render(request, 'auctions/profile.html',{
         'creator': creator,
-        'products': products
+        'products': products,
+        'counter' : len(request.user.products.all()),
     })
 
 def close_bid(request, product_id):
@@ -172,8 +185,19 @@ def close_bid(request, product_id):
     })
 
 
-def add_book_watchlist(request):
+def add_book_watchlist(request, product_id):
 
+    
+    ## remove product
+    try:
+        product = request.user.products.get(pk=product_id)
+        product.users.remove( request.user )
+
+    ## add product
+    except:
+        product = Product.objects.get(pk=product_id)
+        product.users.add(request.user)
+    
     return redirect('index')
 
 

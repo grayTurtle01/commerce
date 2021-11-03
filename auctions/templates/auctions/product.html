@@ -5,10 +5,11 @@
 <div class="col-lg-4">
   <div>
     <h1> {{ product.name }}</h1>
-    <a href="{% url 'add_book_watchlist' %}">
+    <a href="{% url 'add_book_watchlist' product.id %}">
       <span class="badge bg-secondary text-white mb-3">WatchList</span>
     </a>
   </div>
+
   <img src="{{ product.image_url }}" >
   <p>{{ product.description  }}</p>
   <h2>Price: ${{ product.price }}</h2>

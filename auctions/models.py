@@ -4,7 +4,7 @@ from django import forms
 
 
 class User(AbstractUser):
-    pass
+     pass
 
 class Product(models.Model):
     name = models.CharField(max_length=64)
@@ -17,13 +17,14 @@ class Product(models.Model):
     creator = models.CharField(max_length=64)
     is_active = models.BooleanField(default=True)
     winner = models.CharField(max_length=64, default="admin")
-
+    users = models.ManyToManyField(User, blank=True, related_name="products")
 
     def __str__(self):
         return f"{self.name}"
 
-class Foo(models.Model):
-    counter = models.IntegerField()
+     
+     
+
 
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
