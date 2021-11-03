@@ -2,58 +2,75 @@
 
 {% block body %}
 
-<div class="col-lg-4">
-  <div>
-    <h1> {{ product.name }}</h1>
-    <a href="{% url 'add_book_watchlist' product.id %}">
-      <span class="badge bg-secondary text-white mb-3">WatchList</span>
-    </a>
-  </div>
+  <div class="row">
+     <div class="col-lg-4">
+    <div>
+      <h1> {{ product.name }}</h1>
+      <a href="{% url 'add_book_watchlist' product.id %}">
+        <span class="badge bg-secondary text-white mb-3">WatchList</span>
+      </a>
+    </div>
 
-  <img src="{{ product.image_url }}" >
-  <p>{{ product.description  }}</p>
-  <h2>Price: ${{ product.price }}</h2>
-
-
-  {% if product.is_active %}  
-    <form action="{% url 'change_price' product.id %}">
-      <input type="text" name="new_price" placeholder="Bid" autofocus>
-      <input type="submit" value="Place Bid" class="btn btn-primary">
-    </form>
-
-   </div>
-
-    {% if product.creator == user.username %}
-    <a href="{% url 'close_bid' product.id %}" class="btn btn-dark m-3">Close Bid</a>  
-    {% endif %} 
-
- {% else %}
-   <div class="alert alert-secondary ">Closed Bid.  Winner: {{product.winner}}</div>
+    <img src="{{ product.image_url }}" >
+    <p>{{ product.description  }}</p>
+    <h2>Price: ${{ product.price }}</h2>
 
 
-{% endif %}
+    {% if product.is_active %}  
+      <form action="{% url 'change_price' product.id %}">
+        <input type="text" name="new_price" placeholder="Bid" autofocus>
+        <input type="submit" value="Place Bid" class="btn btn-primary">
+      </form>
 
+      
+      {% if product.creator == user.username %}
+      <a href="{% url 'close_bid' product.id %}" class="btn btn-dark m-3">Close Bid</a>  
+      {% endif %} 
+      
+      {% else %}
+      <div class="alert alert-secondary ">Closed Bid.  Winner: {{product.winner}}</div>
+      
+      
+      {% endif %}
+      
+      
+      {% if messageFail %}
+      <div class="alert alert-danger col-lg-4 mt-3">{{messageFail}}</div>
+      {% endif %}
+      
+      {% if messageSuccess %}
+      <div class="alert alert-success col-lg-4 mt-3">{{messageSuccess}}</div>
+      {% endif %}
+      
+      
+      
+      <h2>Details</h2>
+      <ul>
+        <li>Listed by: <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
+        <li>Category: {{product.category}}</li>
+        <li>Status: {% if product.is_active %}
+          Active
+          {% else %}
+          Closed
+          {% endif %}
+        </li>
+      </ul>
+      
+    </div>
 
-  {% if messageFail %}
-  <div class="alert alert-danger col-lg-4 mt-3">{{messageFail}}</div>
-  {% endif %}
+    <div class="col-lg-4">
+      <h2>Comments</h2>
+      <ul>
+          {% for comment in comments %}
+            <li>{{comment}}</li>
+          {% endfor%}
+        </ul>
 
-  {% if messageSuccess %}
-  <div class="alert alert-success col-lg-4 mt-3">{{messageSuccess}}</div>
-  {% endif %}
-
-
-
-<h2>Details</h2>
-<ul>
-  <li>Listed by: <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
-  <li>Category: {{product.category}}</li>
-  <li>Status: {% if product.is_active %}
-    Active
-    {% else %}
-    Closed
-    {% endif %}
-  </li>
-</ul>
-
+      <form action="{% url 'add_comment' product.id %}" method="post">
+        {% csrf_token%}
+        <textarea name="comment" id="" cols="30" rows="3" required></textarea>
+        <input type="submit" value="Send Comment" class="btn btn-info">
+      </form>
+    </div>
+</div>
 {% endblock%}

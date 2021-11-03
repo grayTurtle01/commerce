@@ -22,8 +22,14 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-     
-     
+class Comment(models.Model):
+    comment = models.CharField(max_length=128)
+    creator = models.CharField(max_length=64)
+    product_id = models.IntegerField()     
+    #date = models.DateField()
+
+    def __str__(self):
+        return f"{self.comment} | {self.creator}" 
 
 
 class UploadFileForm(forms.Form):

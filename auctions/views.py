@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Product
+from .models import Comment, User, Product
 
 
 def index(request):
@@ -136,7 +136,8 @@ def show_product(request, product_id):
     return render(request, 'auctions/product.html', {
         'product' : product,
         'counter' : counter,
-        'message': ''
+        'message': '',
+        'comments': Comment.objects.filter(product_id=product_id)
     })
 
 
@@ -209,6 +210,23 @@ def show_watchlist(request):
         'products': products,
         'counter': len(request.user.products.all())
     })
+
+
+def add_comment(request, product_id):
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        creator = request.user.username
+
+        new_comment = Comment(comment=comment, creator=creator, product_id=product_id)
+        new_comment.save()
+    
+        return render(request, 'auctions/product.html',{
+            'product': Product.objects.get(pk=product_id),
+            'comments': Comment.objects.filter(product_id=product_id)
+        })
+
+    else:
+        return redirect('index')
 
 from .models import UploadFileForm
 def upload_file(request):
