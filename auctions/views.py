@@ -191,7 +191,7 @@ def close_bid(request, product_id):
 def add_book_watchlist(request, product_id):
 
     
-    ## remove product
+    ## remove product from watchlist
     try:
         product = request.user.products.get(pk=product_id)
         product.users.remove( request.user )
@@ -201,7 +201,7 @@ def add_book_watchlist(request, product_id):
         product = Product.objects.get(pk=product_id)
         product.users.add(request.user)
     
-    return redirect('index')
+    return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
 
 def show_watchlist(request):
@@ -220,10 +220,7 @@ def add_comment(request, product_id):
         new_comment = Comment(comment=comment, creator=creator, product_id=product_id)
         new_comment.save()
     
-        return render(request, 'auctions/product.html',{
-            'product': Product.objects.get(pk=product_id),
-            'comments': Comment.objects.filter(product_id=product_id)
-        })
+        return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
     else:
         return redirect('index')
