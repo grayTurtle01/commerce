@@ -2,13 +2,14 @@
 
 {% block body %}
 
+<div class="div-center col-lg-4 col-sm-8 mt-5">
     <h2>Register</h2>
 
     {% if message %}
         <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post" class="col-lg-3 col-sm-6 mb-3">
+    <form action="{% url 'register' %}" method="post" class="col-lg-8 col-sm-7 mb-3">
 
         {% csrf_token %}
 
@@ -33,5 +34,5 @@
     </form>
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
-
+</div>
 {% endblock %}
