@@ -73,7 +73,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-@login_required
+@login_required(login_url='login')
 def add_product(request):
     if request.method == 'GET':
         return render(request, 'auctions/add_product.html',{
@@ -94,14 +94,14 @@ def add_product(request):
 
         return redirect('index')
 
-@login_required
+@login_required(login_url='login')
 def delete_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     product.delete()
 
     return redirect('index')
 
-@login_required
+@login_required(login_url='login')
 def edit_product(request, product_id):
     if request.method == 'GET':
         product = Product.objects.get(pk=product_id)
@@ -198,7 +198,7 @@ def show_profile(request, creator):
         'counter' : counter 
     })
 
-@login_required
+@login_required(login_url='login')
 def close_bid(request, product_id):
     product = Product.objects.get(pk=product_id)
     if product.is_active :
@@ -211,7 +211,7 @@ def close_bid(request, product_id):
     #return redirect('index')
     return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
-@login_required
+@login_required(login_url='login')
 def add_book_watchlist(request, product_id):
 
     
@@ -227,7 +227,7 @@ def add_book_watchlist(request, product_id):
     
     return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
-@login_required
+@login_required(login_url='login')
 def show_watchlist(request):
     products = request.user.products.all()
     return render(request, 'auctions/watchlist.html',{
@@ -235,7 +235,7 @@ def show_watchlist(request):
         'counter': len(request.user.products.all())
     })
 
-@login_required
+@login_required(login_url='login')
 def add_comment(request, product_id):
     if request.method == 'POST':
         comment = request.POST['comment']
