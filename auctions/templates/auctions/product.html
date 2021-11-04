@@ -28,8 +28,9 @@
     {% if product.is_active %}  
        {% if user.is_authenticated %}  
 
-      <form action="{% url 'change_price' product.id %}">
-        <input type="text" name="new_price" placeholder="Bid" autofocus>
+      <form action="{% url 'show_product' product.id %}" method="POST">
+        {% csrf_token %}
+        {{ form.new_price }}
         <input type="submit" value="Place Bid" class="btn btn-primary">
       </form>
       {% endif %}
@@ -50,7 +51,7 @@
       {% endif %}
       
       {% if messageSuccess %}
-      <div class="alert alert-success col-lg-9 mt-3">{{messageSuccess}}</div>
+      <div class="alert alert-success col-lg-11 mt-3">{{messageSuccess}}</div>
       {% endif %}
       
       

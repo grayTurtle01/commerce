@@ -32,6 +32,9 @@ class Comment(models.Model):
         return f"{self.comment} | {self.creator}" 
 
 
+class BidForm(forms.Form):
+    new_price = forms.IntegerField(help_text="Bid")
+
 class UploadFileForm(forms.Form):
     title = forms.CharField(max_length=50)
     file = forms.FileField()

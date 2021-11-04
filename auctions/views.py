@@ -3,12 +3,13 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
-from .models import Comment, User, Product
+from .models import Comment, User, Product, BidForm
 
 
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(is_active=True)
 
     try:
         counter = len(request.user.products.all())
@@ -72,7 +73,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-
+@login_required
 def add_product(request):
     if request.method == 'GET':
         return render(request, 'auctions/add_product.html',{
@@ -93,12 +94,14 @@ def add_product(request):
 
         return redirect('index')
 
+@login_required
 def delete_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     product.delete()
 
     return redirect('index')
 
+@login_required
 def edit_product(request, product_id):
     if request.method == 'GET':
         product = Product.objects.get(pk=product_id)
@@ -128,60 +131,74 @@ def edit_product(request, product_id):
 def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
 
-    ### Is the product in favorites
-    try:
-        request.user.products.get(pk=product_id)
-        is_selected = True
-    except:
-        is_selected = False
-     
+    if request.method == 'GET':
+        ### Is the product in favorites
+        try:
+            request.user.products.get(pk=product_id)
+            is_selected = True
+        except:
+            is_selected = False
+        
 
-    ### Count favorites   
-    try:
-        counter = len(request.user.products.all())
-    except:
-        counter = 0
+        ### Count favorites   
+        try:
+            counter = len(request.user.products.all())
+        except:
+            counter = 0
 
-    return render(request, 'auctions/product.html', {
-        'product' : product,
-        'counter' : counter,
-        'message': '',
-        'comments': Comment.objects.filter(product_id=product_id),
-        'is_selected': is_selected
-    })
-
-
-def change_price(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    new_price = int(request.GET['new_price'])
-
-    if( new_price > product.price ):
-        product.price = new_price
-        product.winner = request.user.username
-        product.save()
-
-        return render(request, 'auctions/product.html',{
-            'product': product,
-            'messageSuccess': "The Bid was accepted !!"
+        return render(request, 'auctions/product.html', {
+            'product' : product,
+            'counter' : counter,
+            'message': '',
+            'comments': Comment.objects.filter(product_id=product_id),
+            'is_selected': is_selected,
+            'form': BidForm()
         })
 
-    else:
-        return render(request, 'auctions/product.html',{
-            'product': product,
-            'messageFail': f"The amount must be greater than ${product.price}"
-        }
-        )
+    if request.method == 'POST':
+        new_price = int(request.POST['new_price'])
+
+        if( new_price > product.price ):
+            product.price = new_price
+            product.winner = request.user.username
+            product.save()
+
+            return render(request, 'auctions/product.html',{
+                'product': product,
+                'messageSuccess': "The Bid was accepted !!",
+                'form': BidForm(),
+                'comments': Comment.objects.filter(creator=request.user.username),
+                'counter': len(request.user.products.all())
+
+            })
+
+        else:
+            return render(request, 'auctions/product.html',{
+                'product': product,
+                'messageFail': f"The bid must be greater than ${product.price}",
+                'form': BidForm(),
+                'comments': Comment.objects.filter(creator=request.user.username),
+                'counter': len(request.user.products.all())
+            }
+            )
+
 
 
 def show_profile(request, creator):
     products = Product.objects.filter(creator=creator)
 
+    if request.user.is_authenticated:
+        counter = len(request.user.products.all())
+    else: 
+        counter = 0
+
     return render(request, 'auctions/profile.html',{
         'creator': creator,
         'products': products,
-        'counter' : len(request.user.products.all()),
+        'counter' : counter 
     })
 
+@login_required
 def close_bid(request, product_id):
     product = Product.objects.get(pk=product_id)
     if product.is_active :
@@ -194,7 +211,7 @@ def close_bid(request, product_id):
     #return redirect('index')
     return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
-
+@login_required
 def add_book_watchlist(request, product_id):
 
     
@@ -210,7 +227,7 @@ def add_book_watchlist(request, product_id):
     
     return HttpResponseRedirect(reverse('show_product', args=(product_id,)))
 
-
+@login_required
 def show_watchlist(request):
     products = request.user.products.all()
     return render(request, 'auctions/watchlist.html',{
@@ -218,7 +235,7 @@ def show_watchlist(request):
         'counter': len(request.user.products.all())
     })
 
-
+@login_required
 def add_comment(request, product_id):
     if request.method == 'POST':
         comment = request.POST['comment']
@@ -232,12 +249,24 @@ def add_comment(request, product_id):
     else:
         return redirect('index')
 
+
 def products_filtered(request, category):
-    products = Product.objects.filter(category=category)
+    if category == 'All':
+        products = Product.objects.all()
+    elif category == 'Closed':
+        products = Product.objects.filter(is_active=False)
+    else:
+        products = Product.objects.filter(category=category)
+
+    if request.user.is_authenticated:
+        counter = len(request.user.products.all())
+    else:
+        counter = 0
 
     return render(request, 'auctions/products_filtered.html',{
         'products': products,
-        'category': category
+        'category': category,
+        'counter': 0
     })
 
 from .models import UploadFileForm
