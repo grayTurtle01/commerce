@@ -16,8 +16,16 @@ body {
     background-color: #ededed;
 }
 
+
 .card .card-title{
-    color: black
+    color: black;
+}
+
+.card-title:hover{
+    color: black;
+    text-decoration-color: black;
+    text-decoration: none;
+
 }
 
 .card h5{

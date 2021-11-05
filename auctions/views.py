@@ -167,7 +167,7 @@ def show_product(request, product_id):
                 'product': product,
                 'messageSuccess': "The Bid was accepted !!",
                 'form': BidForm(),
-                'comments': Comment.objects.filter(creator=request.user.username),
+                'comments': Comment.objects.filter(product_id=product_id),
                 'counter': len(request.user.products.all())
 
             })
@@ -266,7 +266,7 @@ def products_filtered(request, category):
     return render(request, 'auctions/products_filtered.html',{
         'products': products,
         'category': category,
-        'counter': 0
+        'counter': counter
     })
 
 from .models import UploadFileForm

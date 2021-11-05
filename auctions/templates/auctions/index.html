@@ -5,31 +5,6 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    <div class="container">
-    <div class="row products">
-    {% for product in products %}
-            <div class="col-lg-3 col-sm-6 mt-3">
-
-                <div class="card mb-3 text-left border-secondary h-100">
-                    <a href="{% url 'show_product' product.id %}">
-                        <img class="card-img-top"  
-                             src="{{ product.image_url }}" >
-                        
-                    </a>
-
-                    <div class="card-body border-secondary" >
-                        <a href="{% url 'show_product' product.id %}">
-                            <h4 class="card-title">{{ product.name }}</h4>
-                        </a>
-                        <h5 class="mt-4">${{ product.price }}</h5>
-                        <p class="card-text">{{ product.description}}</p>
-                
-                        
-                    </div>     
-                </div>
-            </div>
-            {% endfor%}
-    </div>
-    </div>
+    {% include 'auctions/render_products.html' %}
 
 {% endblock %}
