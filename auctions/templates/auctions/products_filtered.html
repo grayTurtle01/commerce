@@ -1,9 +1,11 @@
 {% extends "auctions/layout.html" %}
 
 {% load static %}
+{% block title %}{{category}}{% endblock %} 
+
 
 {% block body %}
-    <h2>{{category}}</h2>
+    <h2 style="padding: 10px;">{{category}}</h2>
 
     {% include 'auctions/render_products.html' %}
 
