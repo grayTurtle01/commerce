@@ -21,22 +21,6 @@
         {% if messageSuccess %}
         <div class="alert alert-success col-lg-11 mt-3">{{messageSuccess}}</div>
         {% endif %}
-        
-
-
-        
-        {% if user.is_authenticated %}
-        <a href="{% url 'add_book_watchlist' product.id %}">
-          <span class="badge bg-secondary text-white mb-3">
-            {% if is_selected %}
-              Remove from WatchList
-            {% else %}
-              Add to WatchList
-            {% endif %}
-          </span>
-        </a>
-        {% endif %}
-
       </div>
 
 
@@ -49,6 +33,18 @@
         <h5>$ {{ product.price }}</h2>
         <p class="card-text mt-4">{{ product.description  }}</p>
       </div>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'add_book_watchlist' product.id %}" class="text-right">
+        <span class="badge bg-secondary text-white mb-3 p-2 text-uppercase">
+          {% if is_selected %}
+            Remove from WatchList
+          {% else %}
+            Add to WatchList
+          {% endif %}
+        </span>
+      </a>
+      {% endif %}
 
     </div>
 
@@ -71,7 +67,7 @@
 
       
       
-      <h2>Details</h2>
+      <h2 class="mt-4">Details</h2>
       <ul>
         <li><strong>Listed by: </strong> <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
         <li><strong>Category:</strong> {{product.category}}</li>
