@@ -85,8 +85,19 @@ def add_product(request):
         description = request.POST['description']
         price = request.POST['price']
         image_url = request.POST['image_url']
-        category = request.POST['category']
         creator = request.user.username
+        try:
+            category = request.POST['category']
+        except:
+            category = "Undefined"
+
+        if image_url == "":
+            image_url = "/static/auctions/images/not_available.jpg"
+
+       
+
+    
+            
 
         product = Product(name=name, description=description, price=price, 
                           image_url=image_url, category=category, creator=creator)
@@ -99,7 +110,7 @@ def delete_product(request, product_id):
     product = Product.objects.get(pk=product_id)
     product.delete()
 
-    return redirect('index')
+    return HttpResponseRedirect(reverse('show_profile', args=(product.creator,)))
 
 @login_required(login_url='login')
 def edit_product(request, product_id):

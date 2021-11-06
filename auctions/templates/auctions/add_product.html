@@ -8,7 +8,7 @@
     {% csrf_token %}
 
     <div class="form-group">
-      <input name="product_name" type="text" placeholder="Product Name" focus
+      <input name="product_name" type="text" placeholder="Product Name" autofocus
              class="form-control"  >
     </div>
   
@@ -29,7 +29,7 @@
 
 
     <div class="form-group">
-      <select name="category" required>
+      <select name="category">
         <option value="" disabled selected>Category</option>
         <option value="Books">Books</option>
         <option value="Toys">Toys</option>
