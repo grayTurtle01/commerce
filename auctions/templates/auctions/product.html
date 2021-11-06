@@ -13,6 +13,12 @@
         {% if product.is_active == False %}
         <div class="alert alert-dark col-lg-9 "> Bid Closed.  Winner: {{product.winner}}</div>
         {% endif %}
+
+        {% if product.is_active == False %}
+          {% if product.winner == user.username %}
+            <div class="alert alert-success col-lg-9 "> You are the Winner !!</div>
+          {% endif %}
+        {% endif %}
               
         {% if messageFail %}
         <div class="alert alert-danger col-lg-9 mt-3">{{messageFail}}</div>
