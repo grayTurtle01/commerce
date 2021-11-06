@@ -9,6 +9,7 @@ class User(AbstractUser):
 class Product(models.Model):
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=64)
+    initial_price = models.IntegerField()
     price = models.IntegerField()
     image = models.CharField(max_length=64)
     image_url = models.CharField(max_length=300)
@@ -16,7 +17,7 @@ class Product(models.Model):
     #date = models.DateTimeField()
     creator = models.CharField(max_length=64)
     is_active = models.BooleanField(default=True)
-    winner = models.CharField(max_length=64, default="admin")
+    winner = models.CharField(max_length=64, default="")
     users = models.ManyToManyField(User, blank=True, related_name="products")
 
     def __str__(self):

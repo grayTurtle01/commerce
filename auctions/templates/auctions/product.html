@@ -42,7 +42,7 @@
 
     
     <div class="card col-lg-9 col-sm-5 mb-4">
-      <img  class="card-img-top border-primary" src="{{ product.image_url }}" >
+      <img  class="card-img border-primary" src="{{ product.image_url }}" >
 
       <div class="card-body">
         <h4 class="card-title"> {{ product.name }}</h4>
@@ -73,13 +73,18 @@
       
       <h2>Details</h2>
       <ul>
-        <li>Listed by: <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
-        <li>Category: {{product.category}}</li>
-        <li>Status: {% if product.is_active %}
+        <li><strong>Listed by: </strong> <a href="{% url 'show_profile' product.creator %}">{{product.creator}}</a></li>
+        <li><strong>Category:</strong> {{product.category}}</li>
+        <li><strong>Status: </strong>{% if product.is_active %}
           Active
           {% else %}
           Closed
           {% endif %}
+        </li>
+        <li><strong>Last Bidder: </strong> 
+          <a href="{% url 'show_profile' product.winner %}">
+            {{product.winner}}    
+          </a>
         </li>
       </ul>
       

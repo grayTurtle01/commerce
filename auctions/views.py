@@ -83,7 +83,7 @@ def add_product(request):
     if request.method == 'POST':
         name = request.POST['product_name']
         description = request.POST['description']
-        price = request.POST['price']
+        initial_price = request.POST['initial_price']
         image_url = request.POST['image_url']
         creator = request.user.username
         try:
@@ -94,12 +94,9 @@ def add_product(request):
         if image_url == "":
             image_url = "/static/auctions/images/not_available.jpg"
 
-       
 
-    
-            
-
-        product = Product(name=name, description=description, price=price, 
+        product = Product(name=name, description=description, 
+                          initial_price=initial_price, price=initial_price, 
                           image_url=image_url, category=category, creator=creator)
         product.save()
 
@@ -166,10 +163,25 @@ def show_product(request, product_id):
             'form': BidForm()
         })
 
+    ## Bid
     if request.method == 'POST':
         new_price = int(request.POST['new_price'])
+        
+        if product.winner == "" and new_price >= product.initial_price:
+            product.price = new_price
+            product.winner = request.user.username
+            product.save()
 
-        if( new_price > product.price ):
+            return render(request, 'auctions/product.html',{
+                'product': product,
+                'messageSuccess': "The Bid was accepted !!",
+                'form': BidForm(),
+                'comments': Comment.objects.filter(product_id=product_id),
+                'counter': len(request.user.products.all())
+
+            })
+
+        elif new_price > product.price:
             product.price = new_price
             product.winner = request.user.username
             product.save()
