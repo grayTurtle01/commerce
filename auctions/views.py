@@ -172,7 +172,7 @@ def show_product(request, product_id):
             product.winner = request.user.username
             product.save()
 
-            bid = Bid(new_price=new_price, bidder=request.user)
+            bid = Bid(new_price=new_price, bidder=request.user, product_id=product_id)
             bid.save()
 
             return render(request, 'auctions/product.html',{
@@ -189,7 +189,7 @@ def show_product(request, product_id):
             product.winner = request.user.username
             product.save()
 
-            bid = Bid(new_price=new_price, bidder=request.user)
+            bid = Bid(new_price=new_price, bidder=request.user, product_id=product_id)
             bid.save()
 
             return render(request, 'auctions/product.html',{

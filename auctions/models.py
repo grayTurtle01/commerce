@@ -26,7 +26,7 @@ class Product(models.Model):
 class Bid(models.Model):
     new_price = models.IntegerField()
     bidder = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    #product_id = models.IntegerField()
+    product_id = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.new_price}  {self.bidder}"
