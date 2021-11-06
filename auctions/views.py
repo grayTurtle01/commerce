@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Comment, User, Product, BidForm
+from .models import Comment, User, Product, BidForm, Bid
 
 
 def index(request):
@@ -172,6 +172,9 @@ def show_product(request, product_id):
             product.winner = request.user.username
             product.save()
 
+            bid = Bid(new_price=new_price, bidder=request.user)
+            bid.save()
+
             return render(request, 'auctions/product.html',{
                 'product': product,
                 'messageSuccess': "The Bid was accepted !!",
@@ -185,6 +188,9 @@ def show_product(request, product_id):
             product.price = new_price
             product.winner = request.user.username
             product.save()
+
+            bid = Bid(new_price=new_price, bidder=request.user)
+            bid.save()
 
             return render(request, 'auctions/product.html',{
                 'product': product,

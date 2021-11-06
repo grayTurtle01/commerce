@@ -23,6 +23,14 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class Bid(models.Model):
+    new_price = models.IntegerField()
+    bidder = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    #product_id = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.new_price}  {self.bidder}"
+
 class Comment(models.Model):
     comment = models.CharField(max_length=128)
     creator = models.CharField(max_length=64)
