@@ -7,31 +7,31 @@
 
  <div class="row">
 
-    <div class="col-lg-4 m-3">
+    <div class="col-lg-4 m-3 col-sm-12">
       <div>
 
         {% if product.is_active == False %}
-        <div class="alert alert-dark col-lg-9 col-sm-5 "> Bid Closed.  Winner: {{product.winner}}</div>
+        <div class="alert alert-dark col-lg-9 col-sm-6 "> Bid Closed.  Winner: {{product.winner}}</div>
         {% endif %}
 
         {% if product.is_active == False %}
           {% if product.winner == user.username %}
-            <div class="alert alert-success col-lg-9 col-sm-5 "> You are the Winner !!</div>
+            <div class="alert alert-success col-lg-9 col-sm-6 "> You are the Winner !!</div>
           {% endif %}
         {% endif %}
               
         {% if messageFail %}
-        <div class="alert alert-danger col-lg-9 mt-3">{{messageFail}}</div>
+        <div class="alert alert-danger col-lg-9 col-sm-6 mt-3">{{messageFail}}</div>
         {% endif %}
         
         {% if messageSuccess %}
-        <div class="alert alert-success col-lg-9 mt-3">{{messageSuccess}}</div>
+        <div class="alert alert-success col-lg-9 col-sm-6 mt-3">{{messageSuccess}}</div>
         {% endif %}
       </div>
 
 
     
-    <div class="card col-lg-9 col-sm-5 mb-4">
+    <div class="card col-lg-9 col-sm-6 mb-4">
       <img  class="card-img border-primary" src="{{ product.image_url }}" >
 
       <div class="card-body">
@@ -93,7 +93,7 @@
       
     </div>
 
-    <div class="col-lg-4 m-3">
+    <div class="col-lg-4 m-3 col-sm-8" >
       <h2>Comments</h2>
       
       {% for comment in comments %}

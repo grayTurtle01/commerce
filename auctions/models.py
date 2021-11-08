@@ -40,7 +40,6 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.comment} | {self.creator}" 
 
-
 class BidForm(forms.Form):
     new_price = forms.IntegerField(help_text="Bid")
 
