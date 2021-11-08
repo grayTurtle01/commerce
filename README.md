@@ -9,6 +9,7 @@ Make online bids.
 - Python
 - Django
 - Sqlite3
+- Heroku
 
 # ScreenShot 📸
 ![Imagen](https://res.cloudinary.com/dqxtoises/image/upload/v1636384055/commerce_yfpned.png)
