@@ -15,4 +15,6 @@ Make online bids.
 
 # Demos 🖥️
 [Video](https://youtu.be/Cw1w0yj3Qvc)
-[Deploy](https://crazy-bids.herokuapps.com)
+
+[Deploy](https://crazy-bids.herokuapp.com)
+
