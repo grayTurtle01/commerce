@@ -10,7 +10,7 @@ from .models import Comment, User, Product, BidForm, Bid
 
 def index(request):
     products = Product.objects.filter(is_active=True)
-
+    
     try:
         counter = len(request.user.products.all())
     except:
@@ -20,6 +20,7 @@ def index(request):
         'products': products,
         'counter' : counter
     })
+
 
 
 def login_view(request):
@@ -139,6 +140,8 @@ def edit_product(request, product_id):
 def show_product(request, product_id):
     product = Product.objects.get(pk=product_id)
 
+    
+
     if request.method == 'GET':
         ### Is the product in favorites
         try:
@@ -154,6 +157,7 @@ def show_product(request, product_id):
         except:
             counter = 0
 
+        
         return render(request, 'auctions/product.html', {
             'product' : product,
             'counter' : counter,
@@ -164,6 +168,7 @@ def show_product(request, product_id):
             'bids': Bid.objects.filter(product_id=product_id).count()
         })
 
+    
     ## Bid
     if request.method == 'POST':
         new_price = int(request.POST['new_price'])

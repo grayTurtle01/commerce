@@ -84,9 +84,13 @@
           {% endif %}
         </li>
         <li><strong>Last Bidder: </strong> 
+          {% if product.winner == "" %}
+            nobody has bidden
+          {% else %}
           <a href="{% url 'show_profile' product.winner %}">
             {{product.winner}}    
           </a>
+          {% endif %}
         </li>
         <li><strong>Bids: </strong> {{bids}}</li>
       </ul>
