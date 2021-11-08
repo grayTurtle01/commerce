@@ -1,7 +1,7 @@
-# Description
+# Description 🗞️
 Make online bids.
 
-# Stack
+# Stack 🧰
 
 - HTML
 - CSS
@@ -9,4 +9,5 @@ Make online bids.
 - Python
 - Django
 
-# Demos
+# Demos 🖥️
+[Video](https://youtu.be/Cw1w0yj3Qvc)
