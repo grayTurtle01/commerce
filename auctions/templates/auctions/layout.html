@@ -20,28 +20,43 @@
          
            <div class="collapse navbar-collapse " id="miNavBar">
              <ul class='navbar-nav ms-auto'>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-                </li>
-    
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' href="">Categories</a>
-                        <div class="dropdown-menu">
-                            <a href="{% url 'products_filtered' 'Books' %}" class="dropdown-item">Books</a>
-                            <a href="{% url 'products_filtered' 'Toys' %}" class="dropdown-item">Toys</a>
-                            <a href="{% url 'products_filtered' 'Electronics' %}" class="dropdown-item">Electronics</a>
-                            <a href="{% url 'products_filtered' 'All' %}" class="dropdown-item">All</a>
-                            <a href="{% url 'products_filtered' 'Closed' %}" class="dropdown-item">Closed</a>
-                            <a href="{% url 'products_filtered' 'Undefined' %}" class="dropdown-item">Undefined</a>
-                        </div>
-                    </div>
-                </li>
-    
-    
-                {% if user.is_authenticated %}
-                   
+  
+                
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' href="">Categories</a>
+                            <div class="dropdown-menu">
+                                <a href="{% url 'products_filtered' 'Books' %}" class="dropdown-item">Books</a>
+                                <a href="{% url 'products_filtered' 'Toys' %}" class="dropdown-item">Toys</a>
+                                <a href="{% url 'products_filtered' 'Electronics' %}" class="dropdown-item">Electronics</a>
+                                <a href="{% url 'products_filtered' 'All' %}" class="dropdown-item">All</a>
+                                <a href="{% url 'products_filtered' 'Closed' %}" class="dropdown-item">Closed</a>
+                                <a href="{% url 'products_filtered' 'Undefined' %}" class="dropdown-item">Undefined</a>
+                            </div>
+                        </div>
+                    </li>
+
+                   
+
+                    {% if user.is_authenticated %}
+
+                    <li class="nav-item ml-lg-5">
+                        <a class="nav-link">
+                            {% if user.is_authenticated %}
+                            Signed in as <strong>{{ request.user.username }}</strong>.
+                            {% else %}
+                            Not signed in.
+                            {% endif %}
+                        </a>
+                    </li>
+                    
+
+                    <li class="nav-item">
+                    
                         <a class="nav-link" href="{% url 'show_watchlist' %}">WatchList
                             <span class="badge bg-secondary rounded-pill text-white" >{{ counter }}</span>
                         </a>
@@ -53,15 +68,7 @@
                     </li>
                    
 
-                    <li class="nav-item ml-5">
-                        <a class="nav-link">
-                            {% if user.is_authenticated %}
-                            Signed in as <strong>{{ request.user.username }}</strong>.
-                            {% else %}
-                            Not signed in.
-                            {% endif %}
-                        </a>
-                    </li>
+                  
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'show_profile' user.username %}">My Products</a>
@@ -81,7 +88,7 @@
      
     
                 {% else %}
-                    <li class="nav-item ml-5">
+                    <li class="nav-item ml-lg-5">
                         <a class="nav-link" href="{% url 'login' %}">Log In</a>
                     </li>
 
@@ -90,8 +97,6 @@
                     </li>
                 {% endif %}
 
-
-                
 
 
              </ul>

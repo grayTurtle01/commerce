@@ -160,7 +160,8 @@ def show_product(request, product_id):
             'message': '',
             'comments': Comment.objects.filter(product_id=product_id),
             'is_selected': is_selected,
-            'form': BidForm()
+            'form': BidForm(),
+            'bids': Bid.objects.filter(product_id=product_id).count()
         })
 
     ## Bid
@@ -180,7 +181,8 @@ def show_product(request, product_id):
                 'messageSuccess': "The Bid was accepted !!",
                 'form': BidForm(),
                 'comments': Comment.objects.filter(product_id=product_id),
-                'counter': len(request.user.products.all())
+                'counter': len(request.user.products.all()),
+                'bids': Bid.objects.filter(product_id=product_id).count() 
 
             })
 
@@ -197,7 +199,8 @@ def show_product(request, product_id):
                 'messageSuccess': "The Bid was accepted !!",
                 'form': BidForm(),
                 'comments': Comment.objects.filter(product_id=product_id),
-                'counter': len(request.user.products.all())
+                'counter': len(request.user.products.all()),
+                'bids': Bid.objects.filter(product_id=product_id).count()
 
             })
 
@@ -206,8 +209,9 @@ def show_product(request, product_id):
                 'product': product,
                 'messageFail': f"The bid must be greater than ${product.price}",
                 'form': BidForm(),
-                'comments': Comment.objects.filter(creator=request.user.username),
-                'counter': len(request.user.products.all())
+                'comments': Comment.objects.filter(product_id=product_id),
+                'counter': len(request.user.products.all()),
+                'bids': Bid.objects.filter(product_id=product_id).count()
             }
             )
 
